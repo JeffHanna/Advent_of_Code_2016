@@ -68,7 +68,7 @@ puzzle_input_filepath = os.path.abspath( os.path.join( os.getcwd( ),
 
 with open( puzzle_input_filepath ) as file:
 	input = file.read( )
-	lines = input.split( '\n' )
+	PUZZLE_INPUT = input.split( '\n' )
 
 
 KEYPAD_MAP = { ( 0, 2 ) : '1',
@@ -89,14 +89,6 @@ DIRECTION_MAP = { 'U' : ( 0, 1 ),
 					 }
 
 
-def verify_position( pos ):
-	for p in pos:
-		if not 0 <= p <= 2:
-			return False
-
-	return True
-
-
 def find_code( lines, starting_pos ):
 	code = ''
 	pos = starting_pos
@@ -105,8 +97,7 @@ def find_code( lines, starting_pos ):
 		for l in line:
 			direction_coords = DIRECTION_MAP.get( l )
 			new_pos = tuple( map( sum, zip( pos, direction_coords ) ) )
-			valid = verify_position( new_pos )
-			if valid:
+			if new_pos in KEYPAD_MAP.keys( ):			
 				pos = new_pos
 			
 		digit = KEYPAD_MAP.get( pos )
@@ -117,5 +108,5 @@ def find_code( lines, starting_pos ):
 
 
 if __name__ == '__main__':
-	 code = find_code( lines, ( 1, 1 ) )
+	 code = find_code( PUZZLE_INPUT, ( 1, 1 ) )
 	 print( code )

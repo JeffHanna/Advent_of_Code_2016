@@ -14,7 +14,7 @@
     <InterpreterId />
     <InterpreterVersion />
     <IsWindowsApplication>False</IsWindowsApplication>
-    <Name>01_01</Name>
+    <Name>01</Name>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
@@ -25,6 +25,7 @@
     <Compile Include="01_01.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="01_02.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="01_puzzle_input.txt" />
