@@ -18,10 +18,36 @@ For example, the real name for qzmt-zixmtkozy-ivhz-343 is very encrypted name.
 What is the sector ID of the room where North Pole objects are stored?
 
 PERSONAL NOTES:
-* WTF?
+* The trick in the instructions is that the encrypted room name has to be
+  decrypted by rotating each character through the alphabet by the id a number 
+  of times equal to the id. For instance, the id of the first room is 660, so
+  each character has to be rot_660's 660 times. Only doing rot_660 1x will lead
+  to false positive answsers.
 '''
 
 import os
+import string
+
+
+def _decode_room_name( encrypted_room_name, id ):
+	lower = string.ascii_lowercase
+	lower_start = ord( lower[ 0 ] )
+	room_name = encrypted_room_name
+
+	for _i in range( id ):
+		temp_room_name = ''
+		for char in room_name:
+			if char in lower:
+				temp_room_name += chr( lower_start + ( ord( char ) - lower_start + -id ) % 26 )
+			elif char == '-':
+				temp_room_name += ' '
+			else:
+				temp_room_name += char
+
+		room_name = temp_room_name
+
+	return room_name
+				 									  
 
 
 def _make_letter_usage_map( room_name ):
@@ -80,11 +106,10 @@ def _verify_real_room( letter_usage_map, checksum ):
 
 
 
-def find_real_rooms( ):
+def find_north_pole_object_room( ):
 	'''
 	'''
 
-	id_sum = 0
 	puzzle_input_filepath = os.path.abspath( 
 									os.path.join( os.getcwd( ),'04_puzzle_input.txt' ) )
 
@@ -96,20 +121,24 @@ def find_real_rooms( ):
 			id, checksum = parts[ -1 ].split( '[' )
 			id = int( id )
 
-			room_name = ''
+			encrypted_room_name = ''
 			for i in range( len( parts ) - 1 ):
-				room_name += parts[ i ] + '-'
+				encrypted_room_name += parts[ i ] + '-'
 
-			room_name = room_name.rstrip( '-' )
-			letter_usage_map = _make_letter_usage_map( room_name )
+			encrypted_room_name = encrypted_room_name.rstrip( '-' )
+			letter_usage_map = _make_letter_usage_map( encrypted_room_name )
 			
 			if _verify_real_room( letter_usage_map, checksum ):
-				id_sum += id
+				room_name = _decode_room_name( encrypted_room_name, id )
+			
+				if 'northpole object' in room_name:
+					return id
 
-	return id_sum
+
+	return -1
 
 
 												 
 if __name__ == '__main__':
-	id_sum = find_real_rooms( )
-	print( 'The sum of the sector IDs of the real rooms is {0}.'.format( id_sum ) )
+	id = find_north_pole_object_room( )
+	print( 'The sector ID of the room where the North Pole objects are stored is {0}.'.format( id ) )
