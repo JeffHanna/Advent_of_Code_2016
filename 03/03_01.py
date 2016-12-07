@@ -51,4 +51,4 @@ def verify_triangles( triangles ):
 
 if __name__ == '__main__':
 	number_of_triangles = verify_triangles( PUZZLE_INPUT )
-	print( number_of_triangles )
+	print( 'There are {0} valid triangles in the list.'.format( number_of_triangles ) )

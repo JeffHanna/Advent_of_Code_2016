@@ -24,19 +24,39 @@ PERSONAL NOTES:
 
 import os
 
-puzzle_input_filepath = os.path.abspath( os.path.join( os.getcwd( ),
-																		 '03_puzzle_input.txt' ) )
-PUZZLE_INPUT = [ ]
-with open( puzzle_input_filepath ) as file:
-	input = file.readlines( )
 
-for line in input:
-	vals = line.lstrip( ).rstrip( ).split( '  ' )
-	vals = [ int( x ) for x in vals if x ]
-	PUZZLE_INPUT.append( vals )
+def process_input( ):
+	'''
+	'''
+
+	puzzle_input_filepath = os.path.abspath( 
+									os.path.join( os.getcwd( ),'03_puzzle_input.txt' ) )
+
+	with open( puzzle_input_filepath ) as file:
+		input = file.readlines( )
+
+	temp_lines = [ ]
+	for line in input:
+		vals = line.lstrip( ).rstrip( ).split( '  ' )
+		vals = [ int( x ) for x in vals if x ]
+		temp_lines.append( vals )
+
+	triangles = [ ]
+	current_triangle = [ ]
+	for column in range( 3 ): # Going to iterate over temp_lines 3 times.
+		for val in temp_lines:
+			current_triangle.append( val[ column ])
+			if len( current_triangle ) == 3:
+				triangles.append( current_triangle )
+				current_triangle = [ ]	 
+
+	return triangles
 
 
 def verify_triangles( triangles ):
+	'''
+	'''
+
 	valid_triangle_count = 0
 	
 	for t in triangles:
@@ -50,5 +70,6 @@ def verify_triangles( triangles ):
 
 
 if __name__ == '__main__':
-	number_of_triangles = verify_triangles( PUZZLE_INPUT )
-	print( number_of_triangles )
+	triangles = process_input( )
+	number_of_triangles = verify_triangles( triangles )
+	print( 'There are {0} valid triangles in the list.'.format( number_of_triangles ) )
