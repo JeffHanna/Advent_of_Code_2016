@@ -1,4 +1,4 @@
-								  # -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*- 
 '''
 --- Part Two ---
 You finally arrive at the bathroom (it's a several minute walk from the lobby so
