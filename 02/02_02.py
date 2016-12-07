@@ -42,7 +42,7 @@ PERSONAL NOTES:
 import os
 
 puzzle_input_filepath = os.path.abspath( os.path.join( os.getcwd( ), 
-																		'02_puzzle_input.txt' ) )
+																		 '02_puzzle_input.txt' ) )
 
 with open( puzzle_input_filepath ) as file:
 	input = file.read( )

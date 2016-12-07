@@ -64,7 +64,7 @@ Start at ( 1, 1 ). If any coord is < 0 or > 3 then it is off the grid.
 import os
 
 puzzle_input_filepath = os.path.abspath( os.path.join( os.getcwd( ), 
-																		'02_puzzle_input.txt' ) )
+																		 '02_puzzle_input.txt' ) )
 
 with open( puzzle_input_filepath ) as file:
 	input = file.read( )
