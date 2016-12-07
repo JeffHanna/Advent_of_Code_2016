@@ -24,6 +24,18 @@ PERSONAL NOTES:
 
 import os
 
+valid_triangle_count = 0
+
+def _verify_triangle( triangle ):
+	'''
+	'''
+	
+	if triangle[ 0 ] + triangle[ 1 ] > triangle[ 2 ] and \
+		triangle[ 1 ] + triangle[ 2 ] > triangle[ 0 ] and \
+		triangle[ 2 ] + triangle[ 0 ] > triangle[ 1 ]:
+		global valid_triangle_count
+		valid_triangle_count += 1
+
 
 def process_input( ):
 	'''
@@ -31,45 +43,24 @@ def process_input( ):
 
 	puzzle_input_filepath = os.path.abspath( 
 									os.path.join( os.getcwd( ),'03_puzzle_input.txt' ) )
-
-	with open( puzzle_input_filepath ) as file:
-		input = file.readlines( )
-
-	temp_lines = [ ]
-	for line in input:
-		vals = line.lstrip( ).rstrip( ).split( '  ' )
-		vals = [ int( x ) for x in vals if x ]
-		temp_lines.append( vals )
-
-	triangles = [ ]
-	current_triangle = [ ]
-	for column in range( 3 ): # Going to iterate over temp_lines 3 times.
-		for val in temp_lines:
-			current_triangle.append( val[ column ])
-			if len( current_triangle ) == 3:
-				triangles.append( current_triangle )
-				current_triangle = [ ]	 
-
-	return triangles
-
-
-def verify_triangles( triangles ):
-	'''
-	'''
-
-	valid_triangle_count = 0
 	
-	for t in triangles:
-		if t[ 0 ] + t[ 1 ] > t[ 2 ] and \
-			t[ 1 ] + t[ 2 ] > t[ 0 ] and \
-			t[ 2 ] + t[ 0 ] > t[ 1 ]:
-				valid_triangle_count += 1
+	input = [ ]
+	with open( puzzle_input_filepath ) as file:
+		for line in file:
+			vals = line.lstrip( ).rstrip( ).split( ' ' )
+			vals = [ int( x ) for x in vals if x ]
+			input.append( vals )
 
-	return valid_triangle_count
+	triangle = [ ]
+	for column in range( 3 ): # Going to iterate over temp_lines 3 times.
+		for val in input:
+			triangle.append( val[ column ])
+			if len( triangle ) == 3:
+				_verify_triangle( triangle )
+				triangle = [ ]	 
+
 										
-
-
+		
 if __name__ == '__main__':
-	triangles = process_input( )
-	number_of_triangles = verify_triangles( triangles )
-	print( 'There are {0} valid triangles in the list.'.format( number_of_triangles ) )
+	process_input( )
+	print( 'There are {0} valid triangles in the list.'.format( valid_triangle_count ) )
