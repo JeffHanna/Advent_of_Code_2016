@@ -93,4 +93,4 @@ def find_message( ):
 
 if __name__ == '__main__':
 	message = find_message( )
-	print 'The message from Santa is, "{0}".'.format( message )
+	print 'The message from Santa is, \"{0}\".'.format( message )

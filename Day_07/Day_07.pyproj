@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>4587fe1c-819d-4697-aaf2-459650e99f2b</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>07_01.py</StartupFile>
+    <StartupFile>07_02.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

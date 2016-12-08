@@ -50,9 +50,7 @@ def _has_abba_set( chars ):
 			return True
 
 	return False
-
-
-
+				  
 
 def find_tls_support( ):
 	'''

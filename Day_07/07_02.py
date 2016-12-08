@@ -25,3 +25,65 @@ How many IPs in your puzzle input support SSL?
 PERSONAL NOTES:
 
 '''
+
+import os
+
+
+def _compare_aba_triples( a, b ):
+	'''
+	'''
+	if len( a ) == len( b ) == 3:
+		if a[ 0 ] == b[ 1 ] == a[ 2 ] or \
+			b[ 0 ] == a[ 1 ] == b[ 2 ]:
+				return True
+
+	return False
+
+
+def _has_aba_set( chars ):
+	'''
+	'''
+
+	for i in range( 1, len( chars ) - 1 ):
+		if chars[ i - 1 ] == chars[ i + 1 ] and chars[ i - 1 ] != chars[ i ]:
+			return chars[ i - 1 : i + 2 ]
+
+	return ''
+		
+
+def find_ssl_support( ):
+	'''
+	'''
+
+	num_ssl_addresses = 0
+
+	puzzle_input_filepath = os.path.abspath( 
+									os.path.join( os.getcwd( ),'07_puzzle_input.txt' ) )
+
+	with open( puzzle_input_filepath ) as file:
+		for line in file:
+			line = line.rstrip( ).replace( '[', '/' ).replace( ']', '/' )
+			parts = line.split( '/' )
+				
+			# Early out if square-bracketed do not contain ABA triples.
+			inner_aba_triple = ''
+			for i in range( 1, len( parts ) - 1, 2 ):
+				inner_aba_triple =  _has_aba_set( parts[ i ] )
+				if inner_aba_triple:
+					break
+			
+			if inner_aba_triple:
+				for i in range( 0, len( parts ), 2 ):
+					outer_aba_triple = _has_aba_set( parts[ i ] )
+					if outer_aba_triple:
+						if _compare_aba_triples( inner_aba_triple, outer_aba_triple ):
+							num_ssl_addresses += 1
+							break
+
+	return num_ssl_addresses
+
+
+
+if __name__ == '__main__':
+	val = find_ssl_support( )
+	print( 'The number of addresses that support SSL is {0}.'.format( val ) )
