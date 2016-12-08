@@ -21,8 +21,8 @@ PERSONAL NOTES:
 * The trick in the instructions is that the encrypted room name has to be
   decrypted by rotating each character through the alphabet by the id a number 
   of times equal to the id. For instance, the id of the first room is 660, so
-  each character has to be rot_660's 660 times. Only doing rot_660 1x will lead
-  to false positive answsers.
+  each character has to be rot_660'd 660 times. Only doing rot_660 1 time will 
+  lead to false positive answsers.
 '''
 
 import os
