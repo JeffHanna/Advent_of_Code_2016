@@ -34,7 +34,39 @@ Your puzzle input is still cxdnnyjw.
 PERSONAL NOTES:
 '''
 
+import copy
 import hashlib
+import os
+import random
+
+
+def _do_stupid_movie_password_animation( password, digits_solved ):
+	'''
+	Useless Hollywood style password digit spinning animation to run during decryption.
+	This was added because the Day 5, puzzle 2 instructions allude to one.
+	It is not curretnly called in find_password() because it slows down decryption MASSIVELY.
+	'''
+
+	pwd = copy.copy( password )
+	for i in range( len( pwd ) - digits_solved ):
+		char = ''
+		while not char:
+			val = random.randint( 48, 102)
+			if not 58 <= val <= 96:
+				char = chr( val )
+
+		valid_idx = False
+		idx = -1
+		while not valid_idx:
+			idx = random.randint(0, 7)
+			if not pwd[ idx ]:
+				valid_idx = True
+		
+		pwd[ idx ] = char
+
+	pwd = ''.join( pwd )
+	os.system( 'cls' )
+	print( pwd )
 
 
 def find_password( door_id ):
@@ -43,21 +75,22 @@ def find_password( door_id ):
 
 	password = [ '', '', '', '', '', '', '', '' ]
 	incrementor = 0
-
+	
 	for _i in range( 8 ):
 		char = ''
 		while not char:
-			m = hashlib.md5( )
-		
+			#_do_stupid_movie_password_animation( password, _i )
+
 			input = door_id + str( incrementor )
+			m = hashlib.md5( )
 			m.update( input.encode( 'utf-8' ) )
 			hash = m.hexdigest( )
-		
+
 			if hash.startswith( '00000' ):
 				loc = hash[ 5 ]
 				char = hash[ 6 ]
 				if loc.isdigit( ):
-					loc = int( loc ) - 1
+					loc = int( loc )
 					if 0 <= loc <= ( len( password ) - 1 ) and not password[ loc ]:
 						password[ loc ] = char	
 					else:
