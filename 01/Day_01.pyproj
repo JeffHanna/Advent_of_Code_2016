@@ -14,7 +14,7 @@
     <InterpreterId />
     <InterpreterVersion />
     <IsWindowsApplication>False</IsWindowsApplication>
-    <Name>01</Name>
+    <Name>Day_01</Name>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />

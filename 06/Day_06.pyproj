@@ -2,15 +2,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>a75c3c41-df87-4e88-845e-1e89864f5083</ProjectGuid>
-    <ProjectHome>.</ProjectHome>
-    <StartupFile>03_02.py</StartupFile>
+    <ProjectGuid>a9cc6aa4-f227-44f9-b212-84150452a8d7</ProjectGuid>
+    <ProjectHome>
+    </ProjectHome>
+    <StartupFile>06_01.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>03</Name>
-    <RootNamespace>03</RootNamespace>
+    <Name>Day_06</Name>
+    <RootNamespace>Day_6</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,13 +22,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="03_01.py" />
-    <Compile Include="03_02.py">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="06_01.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="03_puzzle_input.txt" />
+    <Content Include="06_puzzle_input.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
