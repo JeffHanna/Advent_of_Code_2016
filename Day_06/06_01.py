@@ -45,17 +45,43 @@ PERSONAL_NOTES:
 import os
 
 class Character_Frequency( ):
+	'''
+	'''
+
 	def __init__( self ):
-		self._character_map = { }
+		self._character_frequency_map = { }
+		self._highest_frequency_character = ''
 
 
-	def add_character( char ):
-		val = self._character_map.get( char, 0 ) + 1
-		self._character_map[ char ] = val
+	@property
+	def highest_frequency_character( self ):
+		'''
+		'''
 
+		if not self._highest_frequency_character:
+			frequency = 0
+			for char in self._character_frequency_map.keys( ):
+				val = self._character_frequency_map.get( char, 0 )
+				if val > frequency:
+					frequency = val
+					self._highest_frequency_character = char
 
+		return self._highest_frequency_character
+	
+	
+	def add_character( self, char ):
+		'''
+		'''
 
+		val = self._character_frequency_map.get( char, 0 ) + 1
+		self._character_frequency_map[ char ] = val 
+		
+
+																  
 def find_message( ):
+	'''
+	'''
+
 	CF_0 = Character_Frequency( )
 	CF_1 = Character_Frequency( )
 	CF_2 = Character_Frequency( )
@@ -71,12 +97,22 @@ def find_message( ):
 									os.path.join( os.getcwd( ),'06_puzzle_input.txt' ) )
 
 	with open( puzzle_input_filepath ) as file:
-		for line.rstrip( ) in file:
+		for line in file:
+			line = line.rstrip( )
 			for i in range( len( line ) ):
-				cf_classes[ i ].add_character( puzzle_input_filepath[ i ] )
+				cf_classes[ i ].add_character( line[ i ] )
+
+	
+	message = ''
+	for cf_c in cf_classes:
+		message += cf_c.highest_frequency_character
+
+	return message
+
 
 
 
 
 if __name__ == '__main__':
-	find_message( )
+	message = find_message( )
+	print 'The message from Santa is, "{0}".'.format( message )
