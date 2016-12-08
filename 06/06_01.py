@@ -44,8 +44,39 @@ PERSONAL_NOTES:
 
 import os
 
-puzzle_input_filepath = os.path.abspath( 
+class Character_Frequency( ):
+	def __init__( self ):
+		self._character_map = { }
+
+
+	def add_character( char ):
+		val = self._character_map.get( char, 0 ) + 1
+		self._character_map[ char ] = val
+
+
+
+def find_message( ):
+	CF_0 = Character_Frequency( )
+	CF_1 = Character_Frequency( )
+	CF_2 = Character_Frequency( )
+	CF_3 = Character_Frequency( )
+	CF_4 = Character_Frequency( )
+	CF_5 = Character_Frequency( )
+	CF_6 = Character_Frequency( )
+	CF_7 = Character_Frequency( )	
+
+	cf_classes = [ CF_0, CF_1, CF_2, CF_3, CF_4, CF_5, CF_6, CF_7 ]
+
+	puzzle_input_filepath = os.path.abspath( 
 									os.path.join( os.getcwd( ),'06_puzzle_input.txt' ) )
 
+	with open( puzzle_input_filepath ) as file:
+		for line.rstrip( ) in file:
+			for i in range( len( line ) ):
+				cf_classes[ i ].add_character( puzzle_input_filepath[ i ] )
+
+
+
+
 if __name__ == '__main__':
-	pass
+	find_message( )
