@@ -63,13 +63,6 @@ Start at ( 1, 1 ). If any coord is < 0 or > 3 then it is off the grid.
 
 import os
 
-puzzle_input_filepath = os.path.abspath( os.path.join( os.getcwd( ), 
-																		 '02_puzzle_input.txt' ) )
-
-with open( puzzle_input_filepath ) as file:
-	input = file.read( )
-	PUZZLE_INPUT = input.split( '\n' )
-
 
 KEYPAD_MAP = { ( 0, 2 ) : '1',
 				   ( 1, 2 ) : '2',
@@ -89,24 +82,32 @@ DIRECTION_MAP = { 'U' : ( 0, 1 ),
 					 }
 
 
-def find_code( lines, starting_pos ):
-	code = ''
-	pos = starting_pos
+def find_code( ):
+	'''
+	'''
 
-	for line in lines:
-		for l in line:
-			direction_coords = DIRECTION_MAP.get( l )
-			new_pos = tuple( map( sum, zip( pos, direction_coords ) ) )
-			if new_pos in KEYPAD_MAP.keys( ):			
-				pos = new_pos
+	code = ''
+	pos = ( 1, 1 )
+
+	puzzle_input_filepath = os.path.abspath( os.path.join( os.getcwd( ), 
+																		 '02_puzzle_input.txt' ) )
+
+	with open( puzzle_input_filepath ) as file:
+		for line in file:
+			line = line.rstrip( )
+			for l in line:
+				direction_coords = DIRECTION_MAP.get( l )
+				new_pos = tuple( map( sum, zip( pos, direction_coords ) ) )
+				if new_pos in KEYPAD_MAP.keys( ):			
+					pos = new_pos
 			
-		digit = KEYPAD_MAP.get( pos )
-		code += digit
+			digit = KEYPAD_MAP.get( pos )
+			code += digit
 
 	return code			  
 
 
 
 if __name__ == '__main__':
-	 code = find_code( PUZZLE_INPUT, ( 1, 1 ) )
-	 print( code )
+	 code = find_code( )
+	 print( 'The bathroom door code is {0}.'.format( code ) )

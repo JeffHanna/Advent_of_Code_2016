@@ -60,16 +60,9 @@ def find_message( ):
 	'''
 	'''
 
-	CF_0 = Character_Frequency( )
-	CF_1 = Character_Frequency( )
-	CF_2 = Character_Frequency( )
-	CF_3 = Character_Frequency( )
-	CF_4 = Character_Frequency( )
-	CF_5 = Character_Frequency( )
-	CF_6 = Character_Frequency( )
-	CF_7 = Character_Frequency( )	
-
-	cf_classes = [ CF_0, CF_1, CF_2, CF_3, CF_4, CF_5, CF_6, CF_7 ]
+	cf_classes = [ ]
+	for i in range( 8 ):
+		cf_classes.append( Character_Frequency( ) )
 
 	puzzle_input_filepath = os.path.abspath( 
 									os.path.join( os.getcwd( ),'06_puzzle_input.txt' ) )
@@ -93,4 +86,4 @@ def find_message( ):
 
 if __name__ == '__main__':
 	message = find_message( )
-	print 'The message from Santa is, \"{0}\".'.format( message )
+	print( 'The message from Santa is, "{0}".'.format( message ) )

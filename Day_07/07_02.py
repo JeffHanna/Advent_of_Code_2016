@@ -32,6 +32,7 @@ import os
 def _compare_aba_triples( a, b ):
 	'''
 	'''
+
 	if len( a ) == len( b ) == 3:
 		if a[ 0 ] == b[ 1 ] == a[ 2 ] or \
 			b[ 0 ] == a[ 1 ] == b[ 2 ]:
@@ -56,7 +57,6 @@ def find_ssl_support( ):
 	'''
 
 	num_ssl_addresses = 0
-
 	puzzle_input_filepath = os.path.abspath( 
 									os.path.join( os.getcwd( ),'07_puzzle_input.txt' ) )
 

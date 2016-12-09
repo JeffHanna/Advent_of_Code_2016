@@ -57,7 +57,6 @@ def find_tls_support( ):
 	'''
 
 	num_tls_addresses = 0
-
 	puzzle_input_filepath = os.path.abspath( 
 									os.path.join( os.getcwd( ),'07_puzzle_input.txt' ) )
 
