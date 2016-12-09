@@ -6,7 +6,7 @@
     <ProjectGuid>a9cc6aa4-f227-44f9-b212-84150452a8d7</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>06_02.py</StartupFile>
+    <StartupFile>06_01.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

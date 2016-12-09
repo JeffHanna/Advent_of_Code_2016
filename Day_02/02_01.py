@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*- 
-'''
+"""
 --- Day 2: Bathroom Security ---
 You arrive at Easter Bunny Headquarters under cover of darkness. However, you 
 left in such a rush that you forgot to use the bathroom! Fancy office buildings 
@@ -59,7 +59,7 @@ Start at ( 1, 1 ). If any coord is < 0 or > 3 then it is off the grid.
 	( 0, 0 ) : 7,
 	( 1, 0 ) : 8, 
 	( 2, 0 ) : 9, }
-'''
+"""
 
 import os
 
@@ -83,8 +83,24 @@ DIRECTION_MAP = { 'U' : ( 0, 1 ),
 
 
 def find_code( ):
-	'''
-	'''
+	"""
+	Parses the input file and using the data on each line determines where the 
+	next valid digit exists on a standard 10-key telephone keypad. If a direction
+	in the input data goes off of an edge of the keypay the current location is
+	kept and considered to be one of the valid digits in the passcode.
+	
+	**Arguments:**
+	
+		None
+	
+	**Keyword Arguments:**
+	
+		None
+	
+	**Returns:**
+	
+		:`str` The valid passcode.
+	"""
 
 	code = ''
 	pos = ( 1, 1 )

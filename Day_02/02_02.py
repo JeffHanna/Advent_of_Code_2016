@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*- 
-'''
+"""
 --- Part Two ---
 You finally arrive at the bathroom (it's a several minute walk from the lobby so
 visitors can behold the many fancy conference rooms and water coolers on this 
@@ -7,11 +7,11 @@ floor) and go to punch in the code. Much to your bladder's dismay, the keypad is
 not at all like you imagined it. Instead, you are confronted with the result of 
 hundreds of man-hours of bathroom-keypad-design meetings:
 
-    1
+	 1
   2 3 4
 5 6 7 8 9
   A B C
-    D
+	 D
 
 You still start at "5" and stop when you're at an edge, but given the same 
 instructions as above, the outcome is very different:
@@ -37,13 +37,13 @@ PERSONAL NOTES:
   ( 0, 0 ), ( 1, 0 ), ( 2, 0 ), ( 3, 0 ), ( 4, 0 )	->	..D..
 * Other than refactoring KEYPAD_MAP to account for the new coordinates the
   code from 02 01 should handle this.
-'''
+"""
 
 import os
 
 
 KEYPAD_MAP = { ( 2, 4 ) : '1',
-				   ( 1, 3 ) : '2',
+					( 1, 3 ) : '2',
 					( 2, 3 ) : '3',
 					( 3, 3 ) : '4',
 					( 0, 2 ) : '5',
@@ -65,8 +65,25 @@ DIRECTION_MAP = { 'U' : ( 0, 1 ),
 
 
 def find_code(  ):
-	'''
-	'''
+	"""
+	Parses the input file and using the data on each line determines where the 
+	next valid digit exists on a custom 5 x 5 keypad. If a direction
+	in the input data goes outside of the keypad shape (see above) the current 
+	location is kept and considered to be one of the valid digits in 
+	the passcode.
+	
+	**Arguments:**
+	
+		None
+	
+	**Keyword Arguments:**
+	
+		None
+	
+	**Returns:**
+	
+		:`str` The valid passcode.
+	"""
 
 	code = ''
 	pos = ( 1, 1 )

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*- 
-'''
+"""
 --- Day 5: How About a Nice Game of Chess? ---
 You are faced with a security door designed by Easter Bunny engineers that seem 
 to have acquired most of their security knowledge by watching hacking movies.
@@ -36,19 +36,40 @@ PERSONAL NOTES:
   character. .startswith() and indexing will be fast enough.
 * Overall this is SLOW!! When running to find the solution it is best to not
   run it in debug.
-'''
+"""
 
 import hashlib
 
 
 def find_password( door_id ):
-	'''
-	'''
+	"""
+	Decodes the inputed door_id string character by character.
+	For a loop that iterates for the length of the door_id an integer is 
+	added to the name and an MD5 has is cacluated. If the hex result of the hash
+	starts with 5 zeros, '00000' the sixth digit of the hash is the next valid
+	character in the password and is added to the return string. Whether or not
+	the hash is valid the incrementer is increased by 1, added back on to the 
+	door_id (so: door_id0, door_id1,...door_id999, and another hash 
+	is calculated. This continues until a password equal to the length of the
+	door_id is found.
+	
+	**Arguments:**
+	
+		:``door_id``:	`str` 
+	
+	**Keyword Arguments:**
+	
+		None
+	
+	**Returns:**
+	
+		`string` The decoded password
+	"""
 
 	password = ''
 	incrementor = 0
 
-	for _i in range( 8 ):
+	for _i in range( len( door_id ) ):
 		char = ''
 		while not char:
 			m = hashlib.md5( )

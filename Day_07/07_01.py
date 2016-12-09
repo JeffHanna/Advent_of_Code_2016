@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*- 
-'''
+"""
 --- Day 7: Internet Protocol Version 7 ---
 While snooping around the local network of EBHQ, you compile a list of IP 
 addresses (they're IPv7, of course; IPv6 is much too limited). You'd like to 
@@ -34,14 +34,30 @@ PERSONAL NOTES:
 * Go to the characters within the square brackets and run the check again.
   If there is a match there the entire thing is invalid.
 * I should really learn regex.
-'''
+"""
 
 import os
 
 
 def _has_abba_set( chars ):
-	'''
-	'''
+	"""
+	The provided string is parsed to see if it has any characters in the 
+	form of 'abba'. The outer two characters must be identical. The inner two
+	characters must also be identical but cannot be the same characters as the
+	outer two.
+	
+	**Arguments:**
+	
+		:``chars``:	`str` A string to examine for abba pairs.
+	
+	**Keyword Arguments:**
+	
+		None
+	
+	**Returns:**
+	
+		`bool` True if an abba pair is found, otherwise false.
+	"""
 
 	for i in range( 1, len( chars ) - 2 ):
 		if chars[ i ] == chars[ i + 1 ] and \
@@ -53,8 +69,31 @@ def _has_abba_set( chars ):
 				  
 
 def find_tls_support( ):
-	'''
-	'''
+	"""
+	For every line in the input file the data is processed to determine if
+	the 'IP' address supports the TLS protocol. Any address with an 
+	abba pair that isn't within the square bracketed section(s) is a 
+	valid address. If the address has an aba pair outside of the square 
+	bracketted sections and also one (or more) within the square bracketted
+	sections is not valid. A count of valid addresses is kept and returned when
+	all of the data has been parsed.
+
+	Some data rules that simplify things:
+	* A line will neither start with, nor end with, a square bracketted section.
+	* Square bracketted sections will never be adjacent within the address.
+		
+	**Arguments:**
+	
+		None
+	
+	**Keyword Arguments:**
+	
+		None
+	
+	**Returns:**
+	
+		`int` The number of addresses that proved TLS support.
+	"""
 
 	num_tls_addresses = 0
 	puzzle_input_filepath = os.path.abspath( 

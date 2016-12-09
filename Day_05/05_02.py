@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*- 
-'''
+"""
 --- Part Two ---
 As the door slides open, you are presented with a second door that uses a 
 slightly more inspired security mechanism. Clearly unimpressed by the last 
@@ -32,7 +32,7 @@ proud of your solution if it uses a cinematic "decrypting" animation.
 Your puzzle input is still cxdnnyjw.
 
 PERSONAL NOTES:
-'''
+"""
 
 import copy
 import hashlib
@@ -41,11 +41,35 @@ import random
 
 
 def _do_stupid_movie_password_animation( password, digits_solved ):
-	'''
-	Useless Hollywood style password digit spinning animation to run during decryption.
-	This was added because the Day 5, puzzle 2 instructions allude to one.
-	It is not curretnly called in find_password() because it slows down decryption MASSIVELY.
-	'''
+	"""
+	Useless Hollywood style password digit spinning animation to run during 
+	decryption. This was added because the Day 5, puzzle 2 instructions allude 
+	to one. For the number of unsolved digits in the password a random
+	lowercase alphanumeric character is generated and inserted in a random
+	unsolved location in the string. After the string has been filled with
+	random unsolved characters the console is cleared and the string is
+	is displayed. In this manner it appears as if every character of the 
+	possible password is being ranomly tested until the actual value for that
+	character is found. Slowly the displayed string will fill out with the 
+	valid password.
+
+	This is not curretnly called in find_password() because it slows down 
+	decryption MASSIVELY.
+		
+	**Arguments:**
+	
+		:``password``:	`str` The current partial decoded password
+		:``digits_solved`` : `int` The number of solved digits in the 
+											decoded password.
+	
+	**Keyword Arguments:**
+	
+		None
+	
+	**Returns:**
+	
+		None
+	"""
 
 	pwd = copy.copy( password )
 	for i in range( len( pwd ) - digits_solved ):
@@ -68,10 +92,34 @@ def _do_stupid_movie_password_animation( password, digits_solved ):
 	os.system( 'cls' )
 	print( pwd )
 
-
+	
 def find_password( door_id ):
-	'''
-	'''
+	"""
+	Decodes the inputed door_id string character by character.
+	For a loop that iterates for the length of the door_id an integer is 
+	added to the name and an MD5 has is cacluated. If the hex result of the hash
+	starts with 5 zeros, '00000' the six digit of the hash is the location in
+	the decoded password string where the seventh character belongs. For instance
+	'000001a would indicate that the second character of th decoded password
+	is 'a'. Locations that are invalid relative to the length of the password
+	and locations that have already been filled are ignored.
+	Whether or not the hash is valid the incrementer is increased by 1, 
+	added back on to the door_id (so: door_id0, door_id1,...door_id999, 
+	and another hash is calculated. This continues until a password equal to the 
+	length of the door_id is found.
+	
+	**Arguments:**
+	
+		:``door_id``:	`str` 
+	
+	**Keyword Arguments:**
+	
+		None
+	
+	**Returns:**
+	
+		`string` The decoded password
+	"""
 
 	password = [ '', '', '', '', '', '', '', '' ]
 	incrementor = 0

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*- 
-'''
+"""
 --- Part Two ---
 With all the decoy data out of the way, it's time to decrypt this list and get 
 moving.
@@ -23,13 +23,33 @@ PERSONAL NOTES:
   of times equal to the id. For instance, the id of the first room is 660, so
   each character has to be rot_660'd 660 times. Only doing rot_660 1 time will 
   lead to false positive answsers.
-'''
+"""
 
 import os
 import string
 
 
 def _decode_room_name( encrypted_room_name, id ):
+	"""
+	Using the value of the id each character of the encrypted room name is 
+	rot'd that value that number of times. So, if the id is 660 each character is
+	rot_660's 660 times. Only lowercase alphanumeric characters are decoded.
+	
+	**Arguments:**
+	
+		:``encrypted_room_name``:	`str` The encrypted room name from the
+													input data
+		:``id``: 'int'							The room id from the input data.
+	
+	**Keyword Arguments:**
+	
+		None
+	
+	**Returns:**
+	
+		`str` The decrypted room name
+	"""
+
 	lower = string.ascii_lowercase
 	lower_start = ord( lower[ 0 ] )
 	room_name = encrypted_room_name
@@ -38,7 +58,8 @@ def _decode_room_name( encrypted_room_name, id ):
 		temp_room_name = ''
 		for char in room_name:
 			if char in lower:
-				temp_room_name += chr( lower_start + ( ord( char ) - lower_start + -id ) % 26 )
+				temp_room_name += chr( lower_start + 
+								  ( ord( char ) - lower_start + -id ) % 26 )
 			elif char == '-':
 				temp_room_name += ' '
 			else:
@@ -51,8 +72,23 @@ def _decode_room_name( encrypted_room_name, id ):
 
 
 def _make_letter_usage_map( room_name ):
-	'''
-	'''
+	"""
+	Counts the useage of each letter in the encrypted room name and returns the
+	data as a dictionary of { letter : count } pairs.
+	
+	**Arguments:**
+	
+		:``room_name``:	`str` The room name to perform the letter frequency
+										count on
+	
+	**Keyword Arguments:**
+	
+		None
+	
+	**Returns:**
+	
+		`dict`
+	"""
 
 	letter_usage_map = { }
 
@@ -62,20 +98,36 @@ def _make_letter_usage_map( room_name ):
 	return letter_usage_map
 
 
+
 def _verify_real_room( letter_usage_map, checksum ):
-	'''
-	* Idea: Iterate over checksum. If any char in it is
-	  not in letter_usage_map, early return False.
-	* Otherwise use weighting values in letter_usage_map to verify the char is
-	  in the correct location.
-
-	'''
-
+	"""
+	Using the letter frequency data and the checksum from the input data
+	the checksum is validated using the following rules:
 	# Characters in checksum are in order of highest usage to lowest.
 	# Usage ties are won by alphabetical order.
 	# For instance in the first line of the data (which is a valid room) the
 	# checksum is 'qhiwf'. i and w are both used 4 times in the room name.
 	# Since i comes before w in the checksum they are in the correct locations.
+	* Idea: Iterate over checksum. If any char in it is
+	  not in letter_usage_map, early return False.
+	* Otherwise use weighting values in letter_usage_map to verify the char is
+
+	**Arguments:**
+	
+		:``letter_usage_map``:	`dict`	The frequency data of each letter in the
+													encrypted room name.
+		:``checksum``: `string`				The room checksum from the input data
+	
+	**Keyword Arguments:**
+	
+		None
+	
+	**Returns:**
+	
+		`bool` True if the checksum passes for the real name, otherwise False.
+	"""
+
+	
 
 	# Checksums must be exactly five characters.
 	if len( checksum ) != 5:
@@ -107,8 +159,25 @@ def _verify_real_room( letter_usage_map, checksum ):
 
 
 def find_north_pole_object_room( ):
-	'''
-	'''
+	"""
+	Parses each line in the input file to divide the line into an id, a checksum,
+	and an encrypted room name. The encrypted room name and the checksum are used
+	to create a character frequency map and to decode the room name. If the
+	decoded room name contains the words "northpole object" it is the room that
+	is being searched for and the room id is returned.
+	
+	**Arguments:**
+	
+		None
+	
+	**Keyword Arguments:**
+	
+		None
+	
+	**Returns:**
+	
+		`int` The id of the room holding Santa's toys.
+	"""
 
 	puzzle_input_filepath = os.path.abspath( 
 									os.path.join( os.getcwd( ),'04_puzzle_input.txt' ) )
