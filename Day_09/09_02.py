@@ -13,7 +13,7 @@ For example:
   no markers.
 - X(8x2)(3x3)ABCY becomes XABCABCABCABCABCABCY, because the decompressed data 
   from the (8x2) marker is then further decompressed, thus triggering the (3x3) 
-  marker twice for a total of six ABC sequences.
+  marker twice for a unpacked_length of six ABC sequences.
 - (27x12)(20x12)(13x14)(7x10)(1x12)A decompresses into a string of A repeated 
   241920 times.
 - (25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN becomes 445 
@@ -24,24 +24,31 @@ For example:
 - What is the decompressed length of the file using this improved format?
 
 PERSONAL NOTES:
-* Making the code from 09_01 recursive to operate on a gathered string for
- decompression data (instead of just calculating the decompression length) 
- should do the trick.
+* Very similar to 09 01 except that each unpacked section will need to be
+  recursively unpacked.
 """
 
 import os
 
 
-def get_length_of_unpacked_data( ):
+def get_length_of_unpacked_data( line ):	
 	"""
-	Parses the input data to get the one line of compressed data.
-	Each character in the data is walked and then checked against the 
-	decompression rules. A running total of the length of the uncompressed data
-	is kept and returned when the function is complete.
+	For the provided line of input data each character is walked to find
+	decompression commands, specified as (#x#). When a decompression command is
+	found the first integer is used to gather up that many characters in the 
+	input line after the command. The second integer is used as a multiplicaiton
+	factor to 'unpack' the data and add the unpacked string length to the running
+	total kept in the unpacked_length variable. If the unpacked string starts
+	with a decompression command it is passed into this function recursively
+	until the resulting unpacked string does not start with a 
+	decompression command. 
+	When this function, and all recursively spawned instances of this function,
+	is complete the total length of the unpacked data is returned.
 
 	**Arguments:**
 	
-		None
+		:``line``: `str`	A string of compressed data including embedded 
+								decompression commands.
 
 	**Keyword Arguments:**
 	
@@ -52,43 +59,40 @@ def get_length_of_unpacked_data( ):
 		`int` Total character count (not including spaces) of decompressed data.
 	"""
 
-	unpacked_data_length = 0
+	unpacked_length = 0
+	
+	i = 0
+	while i < len( line ):
+		if line[ i ] == '(':
+			i += 1
+			unpack_command = ''
+			
+			while line[ i ] != ')':
+				unpack_command += line[ i ]
+				i += 1
 
+			parts = unpack_command.split( 'x' )
+			chars = int( parts[ 0 ] )
+			factor = int( parts[ 1 ] )
+			unpacked_length += factor * get_length_of_unpacked_data( 
+				line[ i + 1 : i + chars + 1 ] )
+
+			i += chars
+		else:
+			unpacked_length += 1
+		i += 1
+	return unpacked_length
+						
+
+
+if __name__ == '__main__':
 	puzzle_input_filepath = os.path.abspath( 
 									os.path.join( os.getcwd( ),'09_puzzle_input.txt' ) )
 
 	with open( puzzle_input_filepath ) as file:
 		lines = file.readlines( )
-
-	line = lines[ 0 ].rstrip( )	
-	unpack_command = ''
 	
-	i = 0
-	while i < len( line):
-		c = line[ i ]
-		if c != '(' and c != ' ' and not unpack_command:
-			unpacked_data_length += 1
+	line = lines[ 0 ].rstrip( )
 
-		elif unpack_command:
-			parts = unpack_command.split('x')
-			unpack_length = int( parts[ 0 ] )
-			mult = int( parts[ -1 ] )
-			unpacked_data_length += ( unpack_length * mult)
-			unpack_command = ''
-			i += unpack_length - 1
-
-		elif c == '(':
-			for j in range( i + 1, len( line ) ):
-				if line[ j ] != ')':
-					unpack_command += line[ j ]
-				else:
-					i = j
-					break
-		i += 1
-
-	return unpacked_data_length
-
-
-if __name__ == '__main__':
-	unpacked_data_length = get_length_of_unpacked_data( )
+	unpacked_data_length = get_length_of_unpacked_data( line )
 	print( 'The length of the unpacked data is {0}.'.format( unpacked_data_length) ) 

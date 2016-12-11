@@ -81,11 +81,11 @@ def get_length_of_unpacked_data( ):
 
 		elif unpack_command:
 			parts = unpack_command.split('x')
-			unpack_length = int( parts[ 0 ] )
-			mult = int( parts[ -1 ] )
-			unpacked_data_length += ( unpack_length * mult)
+			chars = int( parts[ 0 ] )
+			factor = int( parts[ -1 ] )
+			unpacked_data_length += ( chars * factor)
 			unpack_command = ''
-			i += unpack_length - 1
+			i += chars - 1
 
 		elif c == '(':
 			for j in range( i + 1, len( line ) ):

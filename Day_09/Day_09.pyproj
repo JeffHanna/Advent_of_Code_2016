@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>551583b2-17a2-498e-8369-5eb5baad0ebc</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>09_01.py</StartupFile>
+    <StartupFile>09_02.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,6 +23,7 @@
   <ItemGroup>
     <Compile Include="09_02.py" />
     <Compile Include="09_01.py" />
+    <Compile Include="09_02_cheat.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="09_puzzle_input.txt" />
