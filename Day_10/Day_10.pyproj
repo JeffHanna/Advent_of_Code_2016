@@ -21,6 +21,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="10_02.py" />
     <Compile Include="10_01.py" />
   </ItemGroup>
   <ItemGroup>

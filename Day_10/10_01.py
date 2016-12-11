@@ -53,11 +53,12 @@ PERSONAL NOTES:
   value <INT> goes to bot <INT>
 
   So the input parse can be constructed to be optimal to those 2 options.
-* Make a Bot class. 
-* For each instruction in the input data search the list of
-  existing bot classes to see if it already exists. 
-* If not, create it. 
-* If it does, populate it with the data from the input. 
+* Make a Bot class.
+*  
+* For each instruction in the input data if it is a bot creation command
+  execute it. If it is a value assignment command cache it.
+* After the entire input file has been parsed walk through the assignment
+  command cache and execute those commands in order.
 * Whenever a bot contains two values call an update on it, which should trigger 
   cascade updates as it inevitably causes other bots to get two values.
 * Whenever a bot gets two values check to see if they are 61 and 17. If so, that
@@ -65,17 +66,38 @@ PERSONAL NOTES:
 """
 
 import os
+import sys
 
 
 _bots = { }
+_output_bins = { }
+
+class Output_Bin( object ):
+	"""
+	"""
+
+	def __init__( self, number ):
+		self._NUMBER = number
+		self._values = [ ]
+
+
+	def add_value( self, val ):
+		"""
+		"""
+
+		self._values.append( val )
+
+
 
 class Bot( object ):
 	"""
 	"""
 
-	def __init__( self, number, low_to = -1, high_to = -1 ):
+	def __init__( self, number, low_to_bin = False, low_to = -1, high_to_bin = False, high_to = -1 ):
 		self._NUMBER = number
+		self._low_to_bin = low_to_bin
 		self._low_to = low_to
+		self._high_to_bin = high_to_bin
 		self._high_to = high_to
 		self._values = [ ] # max of 2 items
 
@@ -91,19 +113,6 @@ class Bot( object ):
 		else:
 			raise IndexError( 'Bot {0} already has two values!'.format( self._NUMBER ) )
 
-	def assign_low_to( self, val ):
-		"""
-		"""
-
-		self._low_to = val
-
-
-	def assign_high_to( self, val ):
-		"""
-		"""
-
-		self._high_to = val
-
 
 	def _update( self ):
 		"""
@@ -115,32 +124,28 @@ class Bot( object ):
 
 		if 61 in self._values and 17 in self._values:
 			# THIS IS IT!
-			print( 
-				'Bot number {0} is reponsible for sorting values 17 and 61'.format( self._NUMBER ) )
-			sys.exit( 0 )
+			print( 'The bot that processes both values 63 and 17 is bot {0}.'.format( self._NUMBER ) )
+			os.system( 'pause' )
+			sys.exit( 0 )					 
 
-		else:
+		if self._low_to >= 0 and self._high_to >= 0:
 			for i in range( 2 ):
 				if self._values[ i ] < low_value:
 					low_value = self._values[ i ]
 					low_idx = i
 					high_idx = low_idx - 1
 
-		low_bot = _bots.get( self._low_to, None )
-		if not low_bot and self._low_to >= 0:
-			_bots[ self._low_to ] = Bot( self._low_to )
-		else:
-			raise Exception( 'Bot number {0} trying to assign a low value without a valid bot number to send it.'.format( self._NUMBER ) )
+			if self._low_to_bin:
+				low_dest = _output_bins.get( self._low_to, None )
+			else:
+				low_dest = _bots.get( self._low_to, None )
+			low_dest.add_value( self._values[ low_idx ])
 
-		low_bot.add_value( self._values[ low_idx ])
-
-		high_bot = _bots.get( self._high_to, None )
-		if not high_bot and self._high_to >= 0:
-			_bots[ self._high_to ] = Bot( self._high_to )
-		else:
-			raise Exception( 'Bot number {0} trying to assign a high value without a valid bot number to send it.'.format( self._NUMBER ) )
-			
-		high_bot.add_value( self._values[ high_idx ] )
+			if self._high_to_bin:
+				high_dest = _output_bins.get( self._high_to, None )
+			else:
+				high_dest = _bots.get( self._high_to, None )
+			high_dest.add_value( self._values[ high_idx ] )
 
 
 
@@ -148,30 +153,43 @@ def find_bot( ):
 	"""
 	"""
 
+	# Setup output bins
+	for i in range( 21 ):
+		_output_bins[ i ] = Output_Bin( i )	
+
 	puzzle_input_filepath = os.path.abspath( 
 									os.path.join( os.getcwd( ),'10_puzzle_input.txt' ) )
 
+	current_line = 0
+	val_assignments = [ ]
 	with open( puzzle_input_filepath ) as file:
-		# TODO: Maybe use a global FOUND flag instead of having the bot class
-		#       end the program?
 		for line in file:
+			current_line += 1
 			line = line.rstrip( )
 			parts = line.split( ' ' )
 			if parts[ 0 ] == 'bot':
 				bot_num = int( parts[ 1 ] )
+				low_bot = len( parts[ 5 ] ) == 3
 				low_to = int( parts[ 6 ] )
+				high_bot = len( parts[ -2 ] ) == 3
 				high_to = int( parts[ -1 ] )
+
 				if not bot_num in _bots.keys( ):
-					_bots[ bot_num ] = Bot( bot_num, low_to = low_to, high_to = high_to )
+					_bots[ bot_num ] = Bot( bot_num,
+													low_to_bin = not low_bot, 
+													low_to = low_to,
+													high_to_bin = not high_bot, 
+													high_to = high_to )
 					
 			else:
 				val = int( parts[ 1 ] )
 				bot_num = int( parts[ -1 ] )
-				if not bot_num in _bots.keys( ):
-					_bots[ bot_num ] = Bot( bot_num )
-				bot = _bots.get( bot_num, None )
-				bot.add_value( val )
-								
+				val_assignments.append( ( bot_num, val ) )
+
+	for v in val_assignments:
+		bot = _bots.get( v[ 0 ] )
+		bot.add_value( v[ -1 ] )						  
+
 
 
 if __name__ == '__main__':
