@@ -1,0 +1,84 @@
+ 4
+ 3 TM
+ 2 TG | RG RM | CG CM
+*1 SG SM | PG PM
+
+MOVES
+-----
+ 4
+ 3 TM
+*2 SG SM | TG | RG RM | CG CM
+ 1 PG PM
+
+
+ 4
+*3 TM | SG SM
+ 2 TG | RG RM | CG CM
+ 1 PG PM
+ 
+ 
+ 4
+ 3 SG SM
+*2 TG TM | RG RM | CG CM
+ 1 PG PM
+ 
+ 
+ 4
+*3 SG SM | TG TM
+ 2 RG RM | CG CM
+ 1 PG PM
+ 
+ 
+*4 TG TM
+ 3 SG SM
+ 2 RG RM | CG CM
+ 1 PG PM
+ 
+
+ 4 TM
+*3 TG | SG SM
+ 2 RG RM | CG CM
+ 1 PG PM
+ 
+ 
+ 4 TM
+ 3 SG SM
+*2 TG | RG RM | CG CM
+ 1 PG PM
+  
+ 
+ 4 TM
+ 3 SG SM 
+ 2 RG RM | CG CM
+*1 TG | PG PM
+
+
+ 4 TM
+ 3 SG SM
+*2 TG PG | RG RM | CG CM
+ 1 PM
+ 
+ 
+ 4 TM
+*3 TG PG | SG SM
+ 2 RG RM | CG CM
+ 1 PM
+ 
+ 
+*4 TG TM | PG
+ 3 SG SM
+ 2 RG RM | CG CM
+ 1 PM
+ 
+ 
+ 4 TG TM
+*3 PG | SG SM
+ 2 RG RM | CG CM
+ 1 PM
+ 
+ 
+*4 TG TM | PG SG
+ 3 SM
+ 2 RG RM | CG CM
+ 1 PM
+ 
