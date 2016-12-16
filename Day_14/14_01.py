@@ -42,20 +42,53 @@ one-time pad key?
 Your puzzle input is ngcjuoqr.
 
 PERSONAL NOTES:
-* regex, hashlib, and a list of previously generated hashes is all that
+* re, hashlib, and a list of previously generated hashes is all that
   is needed.
 """
 
 import hashlib
-import regex
+import re
 
-triplet_check = regex.compile( '([a-z,0-9])\1{2}' )
-quintuple_check = regex.compile( '([a-z,0-9])\1{4}' )
-generated_hashes = [ ]
+triplet = re.compile( r'(.)\1{2}' )
+hashes = [ ]
 valid_hash_count = 0
+i = 0
 
-while valid_hash_count > 64:
+while valid_hash_count < 64:
+	try:
+		hash = hashes[ i ]
+	except IndexError:
+		m = hashlib.md5( )					
+		input ='abc{0}'.format( i )  	
+		#input = 'ngcjuoqr{0}'.format( i )
+		m.update( input.encode( 'utf-8' ) )
+		hash = m.hexdigest( ).lower( ) 
+		hashes.append( hash )
+	
+	# validate
+	m = triplet.search( hash )
+	if m:
+		# triplet found. Now check for a quintuple in the next 1000 hashes.
+		# There's no reason to not generate all 1000, as they will be used anyway.
+		char = m.group( )[ 0 ]
+		quintuple = re.compile( r'(' + char + ')\1{4}' )
+		for x in range( i + 1, i + 1001 ):
+			try:
+				hash = hashes[ x ]
+			except IndexError:
+				m = hashlib.md5( )
+				input ='abc{0}'.format( i )  	
+				#input = 'ngcjuoqr{0}'.format( i )
+				m.update( input.encode( 'utf-8' ) )
+				hash = m.hexdigest( ).lower( )
+				hashes.append( hash )
 
+				# validate
+				m = quintuple.search( hash )
+				if m:
+					valid_hash_count += 1
+	
+	i += 1
 
 
 if __name__ == '__main__':
