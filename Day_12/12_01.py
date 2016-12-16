@@ -25,7 +25,7 @@ a few instructions:
   inc x increases the value of register x by one.
   dec x decreases the value of register x by one.
   jnz x y jumps to an instruction y away (positive means forward; negative means 
-          backward), but only if x is not zero.
+			 backward), but only if x is not zero.
 
   The jnz instruction moves relative to itself: an offset of -1 would continue 
   at the previous instruction, while an offset of 2 would skip over the 
@@ -51,7 +51,79 @@ PERSONAL NOTES:
 * WOOHOO, all of my time in TIS-100 is about to pay off.
 """
 
+import os
+
+
+class Register( object ):
+	"""
+	"""
+
+	def __init__( self, initial_value ):
+		self._value = initial_value
+
+	@property
+	def value( self ):
+		return self._value
+
+	@value.setter
+	def value( self, val ):
+		self._value = val
+
+
+
+def find_value_of_register_a( ):
+	"""
+	"""
+
+	register_map = { 'a' : Register( 0 ),
+						  'b' : Register( 0 ),
+						  'c' : Register( 0 ),
+						  'd' : Register( 0 ), }
+
+	puzzle_input_filepath = os.path.abspath( 
+									os.path.join( os.getcwd( ),'12_puzzle_input.txt' ) )
+
+	input = [ ]
+	with open( puzzle_input_filepath ) as file:
+		input = file.readlines( )
+
+	i = 0
+	while i < len( input ):
+		line = input[ i ].strip( ) 
+		parts = line.split( ' ' )
+		command = parts[ 0 ]
+
+		if command == 'cpy':
+			val = parts[ 1 ]
+			val = int( val ) if val.isdigit( ) else register_map.get( val ).value
+			destination = parts[ -1 ]
+			register_map.get( destination ).value = val
+			i += 1
+
+		elif command == 'dec':
+			register = parts[ -1 ]
+			register_map.get( register ).value -= 1
+			i += 1
+
+		elif command == 'inc':
+			register = parts[ -1 ]
+			register_map.get( register ).value += 1
+			i += 1
+
+		elif command == 'jnz':
+			val = parts[ 1 ]
+			val = int( val ) if val.isdigit( ) else register_map.get( val ).value
+			if val != 0:
+				i += int( parts[ -1 ] )
+			else:
+				i += 1
+			
+		else:
+			raise Exception( 'Input error, no valid command!' )
+
+	return register_map.get( 'a' ).value
 
 
 if __name__ == '__main__':
-	pass
+	val = find_value_of_register_a( )
+	print( 'The value of register A is {0}.'.format( val ) )	
