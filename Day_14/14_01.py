@@ -49,47 +49,64 @@ PERSONAL NOTES:
 import hashlib
 import re
 
-triplet = re.compile( r'(.)\1{2}' )
-hashes = [ ]
-valid_hash_count = 0
-i = 0
 
-while valid_hash_count < 64:
-	try:
-		hash = hashes[ i ]
-	except IndexError:
-		m = hashlib.md5( )					
-		input ='abc{0}'.format( i )  	
-		#input = 'ngcjuoqr{0}'.format( i )
-		m.update( input.encode( 'utf-8' ) )
-		hash = m.hexdigest( ).lower( ) 
-		hashes.append( hash )
+def generate_hash( i ):
+	"""
+	"""
+
+	m = hashlib.md5( )
+	input = 'ngcjuoqr' + str( i ) #'abc'
+	m.update( input.encode( 'utf-8' ) )
+	hash = m.hexdigest( ).lower( )
+
+	return hash
+
+
+def find_64th_hash_index( ):
+	"""
+	"""
+
+	triplet = re.compile( r'(.)\1{2}' )
+	hashes = [ ]
+	valid_hash_count = 0
+
+	i = 0			 
+	while valid_hash_count < 64:
+		try:
+			hash = hashes[ i ]
+		except IndexError:
+			hash = generate_hash( i )
+			hashes.append( hash )
 	
-	# validate
-	m = triplet.search( hash )
-	if m:
-		# triplet found. Now check for a quintuple in the next 1000 hashes.
-		# There's no reason to not generate all 1000, as they will be used anyway.
-		char = m.group( )[ 0 ]
-		quintuple = re.compile( r'(' + char + ')\1{4}' )
-		for x in range( i + 1, i + 1001 ):
-			try:
-				hash = hashes[ x ]
-			except IndexError:
-				m = hashlib.md5( )
-				input ='abc{0}'.format( i )  	
-				#input = 'ngcjuoqr{0}'.format( i )
-				m.update( input.encode( 'utf-8' ) )
-				hash = m.hexdigest( ).lower( )
-				hashes.append( hash )
+		# validate
+		m = triplet.search( hash )
+		if m:
+			# triplet found. Now check for a quintuple in the next 1000 hashes.
+			# There's no reason to not generate all 1000, as they will be used anyway.
+			char = m.group( )[ 0 ]
+			re_str = r'(' + char + r')\1{4}'
+			quintuple = re.compile( re_str )
+		
+			x = i + 1
+			while x < i + 1000:		
+				try:
+					hash = hashes[ x ]
+				except IndexError:
+					hash = generate_hash( x )
+					hashes.append( hash )
 
 				# validate
 				m = quintuple.search( hash )
 				if m:
 					valid_hash_count += 1
-	
-	i += 1
+					x = i + 1000
+				x += 1					
+		i += 1
+
+	return( i - 1 ) 
+
 
 
 if __name__ == '__main__':
-	pass
+	idx = find_64th_hash_index( )
+	print( 'The index of the 64th valid hash is {0}.'.format( idx ) )
