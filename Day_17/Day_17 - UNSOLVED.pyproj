@@ -2,15 +2,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>a89e689f-f0d1-43fc-a083-f100b01d7e27</ProjectGuid>
-    <ProjectHome>.</ProjectHome>
-    <StartupFile>11_01.py</StartupFile>
+    <ProjectGuid>84f2ce2e-0992-40ed-acc6-c8c90782d42b</ProjectGuid>
+    <ProjectHome>
+    </ProjectHome>
+    <StartupFile>17_01.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>Day_11</Name>
-    <RootNamespace>Day_11</RootNamespace>
+    <Name>Day_17 - UNSOLVED</Name>
+    <RootNamespace>Day_17</RootNamespace>
+    <InterpreterId>Global|PythonCore|3.6</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,10 +23,11 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="11_01.py" />
+    <Compile Include="17_01.py" />
+    <Compile Include="17_02.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="11_puzzle_input.txt" />
+    <InterpreterReference Include="Global|PythonCore|3.6" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

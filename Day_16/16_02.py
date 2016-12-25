@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 """
 --- Part Two ---
-The second disk you have to fill has length 35651584. Again using the initial state in your puzzle input, what is the correct checksum for this disk?
+The second disk you have to fill has length 35651584. Again using the initial 
+state in your puzzle input, what is the correct checksum for this disk?
+
 Your puzzle input is still 10001001100000001.
 """								  
 
